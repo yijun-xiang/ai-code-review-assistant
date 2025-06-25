@@ -1,4 +1,4 @@
-import { Code2, Sparkles, Brain, Cpu, Activity } from 'lucide-react';
+import { Brain, Cpu, Activity } from 'lucide-react';
 import { Badge } from '../ui/Badge';
 
 export function Header() {
