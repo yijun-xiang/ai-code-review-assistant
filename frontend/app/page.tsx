@@ -8,7 +8,8 @@ import { ParticleBackground } from '../components/effects/ParticleBackground';
 import { useCodeAnalysis } from '../hooks/useCodeAnalysis';
 import { useLocalStorage } from '../hooks/useLocalStorage';
 import { DEFAULT_CODE, EXAMPLE_CODES } from '../utils/constants';
-import { Shield, Zap, Brain } from 'lucide-react';
+import { Shield, Zap, Brain, Sparkles } from 'lucide-react';
+import { Button } from '../components/ui/Button';
 
 export default function Home() {
   const [code, setCode] = useLocalStorage('ai-code-review-code', DEFAULT_CODE);
@@ -45,91 +46,121 @@ export default function Home() {
 
   return (
     <div className="flex flex-col h-screen overflow-hidden relative bg-gray-950">
-      {/* Particle Background */}
+      {/* Animated Background Effects */}
       <ParticleBackground />
+      
+      {/* Animated Gradient Orbs */}
+      <div className="fixed inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute -top-40 -right-40 w-80 h-80 bg-purple-600 rounded-full blur-3xl opacity-20 animate-pulse"></div>
+        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-blue-600 rounded-full blur-3xl opacity-20 animate-pulse" style={{ animationDelay: '2s' }}></div>
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-pink-600 rounded-full blur-3xl opacity-10 animate-pulse" style={{ animationDelay: '4s' }}></div>
+      </div>
       
       {/* Grid Background */}
       <div className="fixed inset-0 bg-grid-pattern opacity-5 pointer-events-none"></div>
       
       <main className="flex-1 flex flex-col overflow-hidden relative z-10">
-        <Container className="py-8">
-          {/* 简化的标题区域 */}
+        <Container className="py-6">
+          {/* Simplified Header */}
           <div className="text-center mb-8 relative">
-            <div className="absolute inset-0 flex items-center justify-center opacity-20">
-              <div className="w-96 h-96 bg-gradient-to-r from-purple-600 to-blue-600 rounded-full blur-3xl animate-pulse"></div>
-            </div>
-            
-            <h1 className="text-4xl font-bold mb-2 relative z-10">
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-purple-400 via-blue-400 to-cyan-400">
+            <h1 className="text-5xl font-bold mb-3">
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-purple-400 via-pink-400 to-blue-400 animate-gradient">
                 AI Code Review Assistant
               </span>
             </h1>
-            <p className="text-lg text-gray-400 relative z-10">
-              AI-powered code review and optimization
-            </p>
+            <p className="text-lg text-gray-400">Intelligent code analysis powered by advanced AI</p>
             
-            {/* 状态指示器 */}
-            <div className="mt-4 flex items-center justify-center space-x-6 text-sm">
-              <StatusBadge icon={<Shield className="h-4 w-4" />} text="Secure" />
-              <StatusBadge icon={<Zap className="h-4 w-4" />} text="Real-time" />
-              <StatusBadge icon={<Brain className="h-4 w-4" />} text="Powered by Advanced AI" />
+            {/* Status badges */}
+            <div className="mt-4 flex items-center justify-center space-x-4 text-sm">
+              <StatusBadge icon={<Shield className="h-4 w-4" />} text="Secure" color="green" />
+              <StatusBadge icon={<Zap className="h-4 w-4" />} text="Lightning Fast" color="yellow" />
+              <StatusBadge icon={<Brain className="h-4 w-4" />} text="AI Powered" color="purple" />
             </div>
           </div>
         </Container>
         
-        {/* 主要内容区域 - 调整间距 */}
+        {/* Main Content - New Layout */}
         <div className="flex-1 px-6 lg:px-8 pb-8 overflow-hidden">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 h-full max-w-7xl mx-auto">
-            {/* 代码编辑器 */}
-            <div className="min-h-0 relative group">
-              <div className="absolute -inset-1 bg-gradient-to-r from-purple-600 to-blue-600 rounded-lg blur opacity-20 group-hover:opacity-30 transition duration-1000"></div>
-              <div className="relative h-full">
-                <CodeEditor
-                  code={code}
-                  language={language}
-                  onCodeChange={handleCodeChange}
-                  onLanguageChange={handleLanguageChange}
-                />
+          <div className="max-w-7xl mx-auto h-full">
+            <div className="grid grid-cols-1 lg:grid-cols-5 gap-6 h-full">
+              {/* Left Side - Code Editor (3 columns) */}
+              <div className="lg:col-span-3 flex flex-col space-y-4">
+                {/* Code Editor */}
+                <div className="flex-1 relative group">
+                  <div className="absolute -inset-1 bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 rounded-xl blur opacity-20 group-hover:opacity-30 transition duration-1000"></div>
+                  <div className="relative h-full">
+                    <CodeEditor
+                      code={code}
+                      language={language}
+                      onCodeChange={handleCodeChange}
+                      onLanguageChange={handleLanguageChange}
+                    />
+                  </div>
+                </div>
+                
+                {/* Analyze Button - Below Editor */}
+                <Button
+                  onClick={handleAnalyze}
+                  disabled={status === 'analyzing' || !code.trim()}
+                  className="w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 transform hover:scale-[1.02] transition-all duration-200 shadow-lg hover:shadow-purple-500/25"
+                  size="lg"
+                  loading={status === 'analyzing'}
+                >
+                  {status === 'analyzing' ? (
+                    <>Analyzing Your Code...</>
+                  ) : (
+                    <>
+                      <Sparkles className="h-5 w-5 mr-2" />
+                      Analyze Code
+                      <Sparkles className="h-5 w-5 ml-2" />
+                    </>
+                  )}
+                </Button>
               </div>
-            </div>
-            
-            {/* 分析面板 */}
-            <div className="min-h-0 relative group">
-              <div className="absolute -inset-1 bg-gradient-to-r from-blue-600 to-cyan-600 rounded-lg blur opacity-20 group-hover:opacity-30 transition duration-1000"></div>
-              <div className="relative h-full">
-                <AnalysisPanel
-                  onAnalyze={handleAnalyze}
-                  status={status}
-                  results={results}
-                  error={error}
-                />
+              
+              {/* Right Side - Analysis Results (2 columns) */}
+              <div className="lg:col-span-2 relative group">
+                <div className="absolute -inset-1 bg-gradient-to-r from-blue-600 to-cyan-600 rounded-xl blur opacity-20 group-hover:opacity-30 transition duration-1000"></div>
+                <div className="relative h-full">
+                  <AnalysisPanel
+                    onAnalyze={handleAnalyze}
+                    status={status}
+                    results={results}
+                    error={error}
+                    showAnalyzeButton={false} // 新增属性，隐藏面板内的按钮
+                  />
+                </div>
               </div>
             </div>
           </div>
         </div>
-        
-        {/* 简化的底部信息 */}
-        <footer className="py-4 text-center text-sm text-gray-500">
-          <div className="flex items-center justify-center space-x-2">
-            <span className="flex items-center">
-              <span className="w-2 h-2 bg-green-400 rounded-full mr-2 animate-pulse"></span>
-              Secure
-            </span>
-            <span>•</span>
-            <span>Real-time Analysis</span>
-            <span>•</span>
-            <span>Powered by OpenAI</span>
-          </div>
-        </footer>
       </main>
+      
+      {/* Animated CSS */}
+      <style jsx>{`
+        @keyframes gradient {
+          0%, 100% { background-position: 0% 50%; }
+          50% { background-position: 100% 50%; }
+        }
+        .animate-gradient {
+          background-size: 200% 200%;
+          animation: gradient 3s ease infinite;
+        }
+      `}</style>
     </div>
   );
 }
 
-// 简化的状态徽章组件
-function StatusBadge({ icon, text }: { icon: React.ReactNode; text: string }) {
+// Enhanced Status Badge Component
+function StatusBadge({ icon, text, color }: { icon: React.ReactNode; text: string; color: string }) {
+  const colorClasses = {
+    green: 'bg-green-500/20 text-green-400 border-green-500/30',
+    yellow: 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30',
+    purple: 'bg-purple-500/20 text-purple-400 border-purple-500/30',
+  };
+  
   return (
-    <span className="flex items-center space-x-1 text-gray-400">
+    <span className={`flex items-center space-x-1 px-3 py-1 rounded-full border ${colorClasses[color as keyof typeof colorClasses]} backdrop-blur-sm`}>
       {icon}
       <span>{text}</span>
     </span>
