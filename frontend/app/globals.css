@@ -4,8 +4,8 @@
 
 @layer base {
   :root {
-    --background: 0 0% 3.9%;
-    --foreground: 0 0% 98%;
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
   }
 
   * {
@@ -25,8 +25,8 @@
   }
 
   body {
-    background-color: rgb(10, 10, 10);
-    color: rgb(243 244 246);
+    background-color: #0a0a0a;
+    color: #f3f4f6;
   }
 }
 
@@ -41,7 +41,7 @@
   z-index: 0;
 }
 
-/* 修复高度问题 */
+/* 确保根元素高度 */
 #__next {
   height: 100%;
 }
@@ -53,16 +53,16 @@
 }
 
 .custom-scrollbar::-webkit-scrollbar-track {
-  background: rgb(17 24 39);
+  background: #111827;
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
-  background: rgb(55 65 81);
+  background: #374151;
   border-radius: 9999px;
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: rgb(75 85 99);
+  background: #4b5563;
 }
 
 /* Monaco 编辑器样式 */
@@ -75,5 +75,26 @@
 }
 
 .monaco-editor .monaco-editor-background {
-  background-color: rgb(17, 24, 39) !important;
+  background-color: #111827 !important;
+}
+
+/* 卡片样式修复 */
+.bg-gray-900\/50 {
+  background-color: rgba(17, 24, 39, 0.5);
+}
+
+.bg-gray-800\/50 {
+  background-color: rgba(31, 41, 55, 0.5);
+}
+
+.bg-gray-800 {
+  background-color: #1f2937;
+}
+
+.border-gray-800 {
+  border-color: #1f2937;
+}
+
+.border-gray-700 {
+  border-color: #374151;
 }
