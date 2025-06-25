@@ -13,7 +13,8 @@
   }
 
   html {
-    @apply antialiased;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
   html,
@@ -24,51 +25,8 @@
   }
 
   body {
-    @apply bg-gray-950 text-gray-100;
     background-color: rgb(10, 10, 10);
-  }
-}
-
-@layer utilities {
-  /* 防止内容溢出 */
-  .h-screen-safe {
-    height: 100vh;
-    height: 100dvh;
-  }
-
-  /* 自定义滚动条样式 */
-  .custom-scrollbar::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
-  }
-
-  .custom-scrollbar::-webkit-scrollbar-track {
-    @apply bg-gray-900;
-  }
-
-  .custom-scrollbar::-webkit-scrollbar-thumb {
-    @apply bg-gray-700 rounded-full;
-  }
-
-  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-    @apply bg-gray-600;
-  }
-
-  /* Monaco 编辑器样式 */
-  .monaco-editor {
-    @apply rounded-b-lg;
-  }
-
-  .monaco-editor .margin {
-    background-color: rgba(17, 24, 39, 0.5) !important;
-  }
-
-  .monaco-editor .monaco-editor-background {
-    background-color: rgb(17, 24, 39) !important;
-  }
-
-  .monaco-editor .overflow-guard {
-    @apply rounded-b-lg;
+    color: rgb(243 244 246);
   }
 }
 
@@ -83,12 +41,39 @@
   z-index: 0;
 }
 
-/* 确保主内容在渐变之上 */
-.relative {
-  position: relative;
-}
-
 /* 修复高度问题 */
 #__next {
   height: 100%;
+}
+
+/* 自定义滚动条样式 */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: rgb(17 24 39);
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgb(55 65 81);
+  border-radius: 9999px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgb(75 85 99);
+}
+
+/* Monaco 编辑器样式 */
+.monaco-editor {
+  border-radius: 0 0 0.5rem 0.5rem;
+}
+
+.monaco-editor .margin {
+  background-color: rgba(17, 24, 39, 0.5) !important;
+}
+
+.monaco-editor .monaco-editor-background {
+  background-color: rgb(17, 24, 39) !important;
 }
