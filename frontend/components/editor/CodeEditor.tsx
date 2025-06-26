@@ -1,6 +1,5 @@
 import { useCallback } from 'react';
 import dynamic from 'next/dynamic';
-import { Card } from '../ui/Card';
 import { EditorHeader } from './EditorHeader';
 import { SUPPORTED_LANGUAGES } from '../../utils/constants';
 
@@ -8,8 +7,11 @@ import { SUPPORTED_LANGUAGES } from '../../utils/constants';
 const Editor = dynamic(() => import('@monaco-editor/react'), {
   ssr: false,
   loading: () => (
-    <div className="flex items-center justify-center h-full bg-gray-900">
-      <div className="text-gray-400">Loading editor...</div>
+    <div className="flex items-center justify-center h-full bg-gray-900/50">
+      <div className="text-gray-400 flex items-center space-x-2">
+        <div className="animate-spin h-5 w-5 border-2 border-purple-500 border-t-transparent rounded-full"></div>
+        <span>Loading editor...</span>
+      </div>
     </div>
   ),
 });
@@ -35,7 +37,7 @@ export function CodeEditor({
   const characterCount = code.length;
 
   return (
-    <Card className="h-full flex flex-col overflow-hidden">
+    <div className="h-full flex flex-col overflow-hidden">
       <EditorHeader
         languages={SUPPORTED_LANGUAGES}
         selectedLanguage={language}
@@ -44,7 +46,7 @@ export function CodeEditor({
         lineCount={lineCount}
       />
       
-      <div className="flex-1 min-h-0 overflow-hidden bg-gray-900">
+      <div className="flex-1 min-h-0 overflow-hidden bg-gray-900/50">
         <Editor
           height="100%"
           language={language}
@@ -65,9 +67,16 @@ export function CodeEditor({
               enabled: true,
             },
             automaticLayout: true,
+            scrollbar: {
+              vertical: 'visible',
+              horizontal: 'visible',
+              useShadows: false,
+              verticalScrollbarSize: 10,
+              horizontalScrollbarSize: 10,
+            },
           }}
         />
       </div>
-    </Card>
+    </div>
   );
 }

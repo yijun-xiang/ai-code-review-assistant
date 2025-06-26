@@ -13,15 +13,42 @@ export function LanguageSelector({ languages, value, onChange }: LanguageSelecto
       <select
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="appearance-none bg-gray-800 text-gray-200 px-4 py-2 pr-10 rounded-lg border border-gray-700 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 transition-colors"
+        className="
+          appearance-none 
+          bg-gray-800/60 
+          text-gray-200 
+          text-sm
+          pl-3 pr-8 py-1.5
+          rounded-md 
+          border border-gray-700 
+          hover:border-gray-600
+          focus:border-purple-500 
+          focus:outline-none 
+          focus:ring-1 
+          focus:ring-purple-500/20 
+          transition-all 
+          duration-200
+          cursor-pointer
+          font-medium
+        "
       >
         {languages.map((lang) => (
-          <option key={lang.value} value={lang.value}>
+          <option 
+            key={lang.value} 
+            value={lang.value}
+            className="bg-gray-900"
+          >
             {lang.label}
           </option>
         ))}
       </select>
-      <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400 pointer-events-none" />
+      
+      {/* Dropdown icon */}
+      <ChevronDown className="
+        absolute right-2 top-1/2 -translate-y-1/2 
+        h-3 w-3 text-gray-400 
+        pointer-events-none
+      " />
     </div>
   );
 }

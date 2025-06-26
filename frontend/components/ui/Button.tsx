@@ -9,18 +9,18 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   ({ className, variant = 'primary', size = 'md', loading, children, disabled, ...props }, ref) => {
-    const baseStyles = 'inline-flex items-center justify-center font-medium rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-900';
+    const baseStyles = 'inline-flex items-center justify-center font-semibold rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-black transform active:scale-[0.98]';
     
     const variants = {
-      primary: 'bg-gradient-to-r from-purple-600 to-blue-600 text-white hover:from-purple-700 hover:to-blue-700 focus:ring-purple-500',
-      secondary: 'bg-gray-800 text-gray-200 hover:bg-gray-700 focus:ring-gray-500',
-      ghost: 'bg-transparent text-gray-400 hover:text-gray-200 hover:bg-gray-800 focus:ring-gray-500',
+      primary: 'bg-gradient-to-r from-purple-600 to-blue-600 text-white hover:from-purple-700 hover:to-blue-700 focus:ring-purple-500 shadow-lg hover:shadow-xl',
+      secondary: 'bg-gray-800 text-gray-200 hover:bg-gray-700 focus:ring-gray-500 border border-gray-700 hover:border-gray-600',
+      ghost: 'bg-transparent text-gray-400 hover:text-gray-200 hover:bg-gray-800/30 focus:ring-gray-500',
     };
     
     const sizes = {
       sm: 'px-3 py-1.5 text-sm',
-      md: 'px-6 py-3 text-base',
-      lg: 'px-8 py-4 text-lg',
+      md: 'px-5 py-2.5 text-base',
+      lg: 'px-6 py-3 text-lg',
     };
     
     return (
@@ -33,6 +33,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
           {
             'opacity-50 cursor-not-allowed': disabled || loading,
             'cursor-wait': loading,
+            'hover:scale-[1.02]': !disabled && !loading && variant === 'primary',
           },
           className
         )}
@@ -41,7 +42,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       >
         {loading && (
           <svg
-            className="animate-spin -ml-1 mr-3 h-5 w-5"
+            className="animate-spin -ml-1 mr-2 h-4 w-4"
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 24 24"

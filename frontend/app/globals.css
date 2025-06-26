@@ -4,8 +4,16 @@
 
 @layer base {
   :root {
-    --background: 222.2 84% 4.9%;
+    --background: 0 0% 0%;
     --foreground: 210 40% 98%;
+    
+    /* 自定义颜色变量 */
+    --primary-glow: 139, 92, 246;
+    --secondary-glow: 59, 130, 246;
+    --accent-glow: 236, 72, 153;
+    --success-glow: 34, 197, 94;
+    --warning-glow: 251, 191, 36;
+    --error-glow: 239, 68, 68;
   }
 
   * {
@@ -25,20 +33,9 @@
   }
 
   body {
-    background-color: #0a0a0a;
+    background-color: #000000;
     color: #f3f4f6;
   }
-}
-
-/* 渐变背景效果 */
-.gradient-bg {
-  position: fixed;
-  inset: 0;
-  background: 
-    radial-gradient(ellipse at top, rgba(139, 92, 246, 0.15) 0%, transparent 50%),
-    radial-gradient(ellipse at bottom, rgba(59, 130, 246, 0.1) 0%, transparent 50%);
-  pointer-events: none;
-  z-index: 0;
 }
 
 /* 确保根元素高度 */
@@ -46,93 +43,101 @@
   height: 100%;
 }
 
-/* 自定义滚动条样式 */
-.custom-scrollbar::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+/* 微妙的渐变背景 */
+.gradient-bg {
+  position: fixed;
+  inset: 0;
+  background: 
+    radial-gradient(ellipse 600px 400px at 20% 0%, rgba(139, 92, 246, 0.1) 0%, transparent 50%),
+    radial-gradient(ellipse 500px 350px at 80% 100%, rgba(59, 130, 246, 0.08) 0%, transparent 50%),
+    radial-gradient(ellipse 400px 400px at 50% 50%, rgba(236, 72, 153, 0.05) 0%, transparent 60%);
+  pointer-events: none;
+  z-index: 0;
+  animation: gradient-shift 30s ease infinite;
 }
 
-.custom-scrollbar::-webkit-scrollbar-track {
-  background: #111827;
+@keyframes gradient-shift {
+  0%, 100% { 
+    transform: translate(0, 0) scale(1); 
+  }
+  33% { 
+    transform: translate(-10px, -10px) scale(1.05); 
+  }
+  66% { 
+    transform: translate(10px, -5px) scale(0.98); 
+  }
 }
 
-.custom-scrollbar::-webkit-scrollbar-thumb {
-  background: #374151;
-  border-radius: 9999px;
+/* 玻璃态效果 */
+.glass {
+  background: rgba(17, 24, 39, 0.5);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: #4b5563;
+.glass-subtle {
+  background: rgba(17, 24, 39, 0.3);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-/* Monaco 编辑器样式 */
-.monaco-editor {
-  border-radius: 0 0 0.5rem 0.5rem;
+.glass-dark {
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-.monaco-editor .margin {
-  background-color: rgba(17, 24, 39, 0.5) !important;
+/* 微妙的发光效果 */
+.glow-primary {
+  box-shadow: 
+    0 0 10px rgba(var(--primary-glow), 0.3),
+    0 0 20px rgba(var(--primary-glow), 0.1);
 }
 
-.monaco-editor .monaco-editor-background {
-  background-color: #111827 !important;
-}
-
-/* 卡片样式修复 */
-.bg-gray-900\/50 {
-  background-color: rgba(17, 24, 39, 0.5);
-}
-
-.bg-gray-800\/50 {
-  background-color: rgba(31, 41, 55, 0.5);
-}
-
-.bg-gray-800 {
-  background-color: #1f2937;
-}
-
-.border-gray-800 {
-  border-color: #1f2937;
-}
-
-.border-gray-700 {
-  border-color: #374151;
+.glow-subtle {
+  box-shadow: 
+    0 0 5px rgba(var(--primary-glow), 0.2),
+    0 0 10px rgba(var(--primary-glow), 0.05);
 }
 
 /* 动画定义 */
-@keyframes gradient-x {
-  0%, 100% {
-    transform: translateX(-100%);
+@keyframes pulse-glow {
+  0%, 100% { 
+    opacity: 0.15;
+    filter: blur(40px);
   }
-  50% {
-    transform: translateX(100%);
+  50% { 
+    opacity: 0.25;
+    filter: blur(50px);
   }
 }
 
-@keyframes scan {
+@keyframes code-scan {
   0% {
-    transform: translateY(-100vh);
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.3;
+  }
+  90% {
+    opacity: 0.3;
   }
   100% {
     transform: translateY(100vh);
-  }
-}
-
-@keyframes blink {
-  0%, 100% {
-    opacity: 1;
-  }
-  50% {
     opacity: 0;
   }
 }
 
-@keyframes pulse-slow {
-  0%, 100% {
-    opacity: 1;
+@keyframes gradient {
+  0%, 100% { 
+    background-position: 0% 50%; 
   }
-  50% {
-    opacity: 0.5;
+  50% { 
+    background-position: 100% 50%; 
   }
 }
 
@@ -145,31 +150,96 @@
   }
 }
 
-/* 动画类 */
-.animate-gradient-x {
-  animation: gradient-x 15s ease infinite;
+/* 实用动画类 */
+.animate-pulse-glow {
+  animation: pulse-glow 4s ease-in-out infinite;
 }
 
-.animate-scan {
-  animation: scan 8s linear infinite;
+.animate-code-scan {
+  animation: code-scan 5s linear infinite;
 }
 
-.animate-blink {
-  animation: blink 1s ease-in-out infinite;
-}
-
-.animate-pulse-slow {
-  animation: pulse-slow 3s ease-in-out infinite;
+.animate-gradient {
+  background-size: 200% 200%;
+  animation: gradient 3s ease infinite;
 }
 
 .animate-spin-slow {
   animation: spin-slow 4s linear infinite;
 }
 
+/* 滚动条样式 */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: rgba(17, 24, 39, 0.3);
+  border-radius: 2px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, rgba(139, 92, 246, 0.4), rgba(59, 130, 246, 0.4));
+  border-radius: 2px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, rgba(139, 92, 246, 0.6), rgba(59, 130, 246, 0.6));
+}
+
+/* Monaco 编辑器样式 */
+.monaco-editor {
+  border-radius: 0 0 0.75rem 0.75rem;
+}
+
+.monaco-editor .margin {
+  background-color: rgba(0, 0, 0, 0.3) !important;
+}
+
+.monaco-editor .monaco-editor-background {
+  background-color: rgba(0, 0, 0, 0.5) !important;
+}
+
 /* 网格背景 */
 .bg-grid-pattern {
   background-image: 
-    linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+    linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
   background-size: 50px 50px;
+}
+
+/* 加载动画 */
+.loading-dots {
+  display: inline-flex;
+  gap: 3px;
+}
+
+.loading-dots span {
+  width: 6px;
+  height: 6px;
+  background: currentColor;
+  border-radius: 50%;
+  animation: loading-bounce 1.4s ease-in-out infinite both;
+}
+
+.loading-dots span:nth-child(1) { 
+  animation-delay: -0.32s; 
+}
+.loading-dots span:nth-child(2) { 
+  animation-delay: -0.16s; 
+}
+.loading-dots span:nth-child(3) { 
+  animation-delay: 0s; 
+}
+
+@keyframes loading-bounce {
+  0%, 80%, 100% {
+    transform: scale(0.8);
+    opacity: 0.5;
+  }
+  40% {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
