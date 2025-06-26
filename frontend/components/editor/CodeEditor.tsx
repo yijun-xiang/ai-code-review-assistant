@@ -1,9 +1,15 @@
 import { useCallback, useRef } from 'react';
-import Editor, { OnMount } from '@monaco-editor/react';
+import Editor, { OnMount, loader } from '@monaco-editor/react';
 import { EditorHeader } from './EditorHeader';
 import { SUPPORTED_LANGUAGES } from '../../utils/constants';
 import { MousePointer2, Sparkles } from 'lucide-react';
 import type { editor } from 'monaco-editor';
+
+loader.config({
+  paths: {
+    vs: 'https://unpkg.com/monaco-editor@0.45.0/min/vs'
+  }
+});
 
 interface CodeEditorProps {
   code: string;
@@ -90,6 +96,18 @@ export function CodeEditor({
             onChange={handleEditorChange}
             onMount={handleEditorMount}
             theme="vs-dark"
+            loading={
+              <div className="flex items-center justify-center h-full">
+                <div className="text-center">
+                  <div className="loading-dots mb-2">
+                    <span className="bg-purple-400"></span>
+                    <span className="bg-pink-400"></span>
+                    <span className="bg-blue-400"></span>
+                  </div>
+                  <p className="text-gray-400 text-sm">Loading editor...</p>
+                </div>
+              </div>
+            }
             options={{
               minimap: { enabled: false },
               fontSize: 14,
