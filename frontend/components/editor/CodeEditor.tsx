@@ -3,7 +3,6 @@ import dynamic from 'next/dynamic';
 import { EditorHeader } from './EditorHeader';
 import { SUPPORTED_LANGUAGES } from '../../utils/constants';
 
-// 动态导入 Monaco Editor
 const Editor = dynamic(() => import('@monaco-editor/react'), {
   ssr: false,
   loading: () => (

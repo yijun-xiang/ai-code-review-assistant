@@ -7,7 +7,6 @@
     --background: 0 0% 0%;
     --foreground: 210 40% 98%;
     
-    /* 自定义颜色变量 */
     --primary-glow: 139, 92, 246;
     --secondary-glow: 59, 130, 246;
     --accent-glow: 236, 72, 153;
@@ -38,12 +37,10 @@
   }
 }
 
-/* 确保根元素高度 */
 #__next {
   height: 100%;
 }
 
-/* 微妙的渐变背景 */
 .gradient-bg {
   position: fixed;
   inset: 0;
@@ -68,7 +65,6 @@
   }
 }
 
-/* 玻璃态效果 */
 .glass {
   background: rgba(17, 24, 39, 0.5);
   backdrop-filter: blur(16px);
@@ -90,7 +86,6 @@
   border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-/* 微妙的发光效果 */
 .glow-primary {
   box-shadow: 
     0 0 10px rgba(var(--primary-glow), 0.3),
@@ -103,7 +98,6 @@
     0 0 10px rgba(var(--primary-glow), 0.05);
 }
 
-/* 动画定义 */
 @keyframes pulse-glow {
   0%, 100% { 
     opacity: 0.15;
@@ -150,7 +144,6 @@
   }
 }
 
-/* 实用动画类 */
 .animate-pulse-glow {
   animation: pulse-glow 4s ease-in-out infinite;
 }
@@ -168,7 +161,6 @@
   animation: spin-slow 4s linear infinite;
 }
 
-/* 滚动条样式 */
 .custom-scrollbar::-webkit-scrollbar {
   width: 4px;
   height: 4px;
@@ -188,7 +180,6 @@
   background: linear-gradient(180deg, rgba(139, 92, 246, 0.6), rgba(59, 130, 246, 0.6));
 }
 
-/* Monaco 编辑器样式 */
 .monaco-editor {
   border-radius: 0 0 0.75rem 0.75rem;
 }
@@ -201,7 +192,6 @@
   background-color: rgba(0, 0, 0, 0.5) !important;
 }
 
-/* 网格背景 */
 .bg-grid-pattern {
   background-image: 
     linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
@@ -209,7 +199,6 @@
   background-size: 50px 50px;
 }
 
-/* 加载动画 */
 .loading-dots {
   display: inline-flex;
   gap: 3px;

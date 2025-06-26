@@ -41,7 +41,6 @@ export function AnalysisResults({ results }: AnalysisResultsProps) {
 
   return (
     <div className="space-y-6">
-      {/* 总体评分 */}
       <div className="text-center">
         <div className="text-4xl font-bold mb-2">
           <span className={getScoreColor(results.overall_score)}>
@@ -52,7 +51,6 @@ export function AnalysisResults({ results }: AnalysisResultsProps) {
         <p className="text-gray-300">{results.summary}</p>
       </div>
 
-      {/* 建议列表 */}
       {results.suggestions.length > 0 && (
         <div className="space-y-3">
           <h3 className="text-lg font-medium text-gray-200 mb-3">Suggestions</h3>
@@ -90,7 +88,6 @@ export function AnalysisResults({ results }: AnalysisResultsProps) {
         </div>
       )}
 
-      {/* 说明 */}
       {results.explanation && (
         <div className="p-4 rounded-lg bg-blue-900/20 border border-blue-800/50">
           <h4 className="text-blue-400 font-medium mb-2">Additional Notes</h4>

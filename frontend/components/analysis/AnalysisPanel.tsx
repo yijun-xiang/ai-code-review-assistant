@@ -177,7 +177,6 @@ export function AnalysisPanel({ onAnalyze, status, results, error, showAnalyzeBu
   );
 }
 
-// Progress Item Component
 function ProgressItem({ label, progress }: { label: string; progress: number }) {
   return (
     <div className="w-full">
@@ -195,7 +194,6 @@ function ProgressItem({ label, progress }: { label: string; progress: number }) 
   );
 }
 
-// Stat Card Component
 function StatCard({ icon, label, value }: { icon: React.ReactNode; label: string; value: string }) {
   return (
     <div className="glass-subtle p-3 rounded-lg border border-gray-800 hover:border-gray-700 transition-all duration-300">

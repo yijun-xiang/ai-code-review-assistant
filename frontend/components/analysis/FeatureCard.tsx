@@ -93,7 +93,6 @@ export function FeatureCard({ icon, title, description, color = 'purple', enhanc
     );
   }
 
-  // Original simple style
   return (
     <div className="flex items-start space-x-3 p-4 rounded-lg bg-gray-800/30 border border-gray-700/50 hover:border-gray-600 transition-colors duration-200">
       <div className="flex-shrink-0 mt-0.5">{icon}</div>

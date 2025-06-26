@@ -19,16 +19,13 @@ export interface CodeReviewRequest {
     explanation?: string;
   }
   
-  // 语言选项
   export interface Language {
     value: string;
     label: string;
   }
   
-  // 分析状态
   export type AnalysisStatus = 'idle' | 'analyzing' | 'completed' | 'error';
   
-  // 功能特性
   export interface Feature {
     icon: React.ReactNode;
     title: string;

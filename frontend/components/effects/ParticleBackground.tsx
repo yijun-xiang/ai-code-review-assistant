@@ -42,7 +42,7 @@ export function ParticleBackground() {
 
     // Particle configuration
     const particles: Particle[] = [];
-    const particleCount = 60; // 减少粒子数量以提高性能
+    const particleCount = 60; 
     const maxDistance = 150;
     const mouseInfluenceRadius = 200;
     
@@ -70,7 +70,6 @@ export function ParticleBackground() {
       });
     }
 
-    // Animation loop
     const animate = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -164,7 +163,6 @@ export function ParticleBackground() {
 
     animate();
 
-    // Cleanup
     return () => {
       window.removeEventListener('resize', resizeCanvas);
       window.removeEventListener('mousemove', handleMouseMove);
