@@ -38,7 +38,7 @@ jobs:
       run: |
         cd frontend
         docker build \
-          --build-arg NEXT_PUBLIC_API_URL=http://ai-code-review-alb-2000851462.us-east-1.elb.amazonaws.com \
+          --build-arg NEXT_PUBLIC_API_URL=https://code.yijunxiang.com \
           -t ${{ env.ECR_FRONTEND }}:latest .
         docker push ${{ env.ECR_FRONTEND }}:latest
 
