@@ -89,7 +89,6 @@ export function AnalysisPanel({ onAnalyze, status, results, error, showAnalyzeBu
       );
     }
 
-    // Idle state
     return (
       <div className="flex flex-col items-center justify-center h-full text-center p-6">
         <div className="relative mb-6">
