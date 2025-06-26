@@ -17,8 +17,8 @@ export function LanguageSelector({ languages, value, onChange }: LanguageSelecto
           appearance-none 
           bg-gray-800/60 
           text-gray-200 
-          text-sm
-          pl-3 pr-8 py-1.5
+          text-xs sm:text-sm
+          pl-2 sm:pl-3 pr-6 sm:pr-8 py-1 sm:py-1.5
           rounded-md 
           border border-gray-700 
           hover:border-gray-600
@@ -43,10 +43,9 @@ export function LanguageSelector({ languages, value, onChange }: LanguageSelecto
         ))}
       </select>
       
-      {/* Dropdown icon */}
       <ChevronDown className="
-        absolute right-2 top-1/2 -translate-y-1/2 
-        h-3 w-3 text-gray-400 
+        absolute right-1.5 sm:right-2 top-1/2 -translate-y-1/2 
+        h-2.5 w-2.5 sm:h-3 sm:w-3 text-gray-400 
         pointer-events-none
       " />
     </div>

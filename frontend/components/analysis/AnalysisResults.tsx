@@ -16,13 +16,13 @@ export function AnalysisResults({ results }: AnalysisResultsProps) {
   const getSeverityIcon = (severity: string) => {
     switch (severity) {
       case 'error':
-        return <XCircle className="h-4 w-4 text-red-400" />;
+        return <XCircle className="h-3 w-3 sm:h-4 sm:w-4 text-red-400" />;
       case 'warning':
-        return <AlertCircle className="h-4 w-4 text-yellow-400" />;
+        return <AlertCircle className="h-3 w-3 sm:h-4 sm:w-4 text-yellow-400" />;
       case 'info':
-        return <Info className="h-4 w-4 text-blue-400" />;
+        return <Info className="h-3 w-3 sm:h-4 sm:w-4 text-blue-400" />;
       default:
-        return <CheckCircle className="h-4 w-4 text-green-400" />;
+        return <CheckCircle className="h-3 w-3 sm:h-4 sm:w-4 text-green-400" />;
     }
   };
 
@@ -40,29 +40,29 @@ export function AnalysisResults({ results }: AnalysisResultsProps) {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 sm:space-y-6">
       <div className="text-center">
-        <div className="text-4xl font-bold mb-2">
+        <div className="text-2xl sm:text-3xl md:text-4xl font-bold mb-1 sm:mb-2">
           <span className={getScoreColor(results.overall_score)}>
             {results.overall_score.toFixed(1)}
           </span>
-          <span className="text-gray-400 text-2xl">/10</span>
+          <span className="text-gray-400 text-xl sm:text-2xl">/10</span>
         </div>
-        <p className="text-gray-300">{results.summary}</p>
+        <p className="text-gray-300 text-xs sm:text-sm">{results.summary}</p>
       </div>
 
       {results.suggestions.length > 0 && (
-        <div className="space-y-3">
-          <h3 className="text-lg font-medium text-gray-200 mb-3">Suggestions</h3>
+        <div className="space-y-2 sm:space-y-3">
+          <h3 className="text-base sm:text-lg font-medium text-gray-200 mb-2 sm:mb-3">Suggestions</h3>
           {results.suggestions.map((suggestion, index) => (
             <div
               key={index}
-              className="p-4 rounded-lg bg-gray-800/50 border border-gray-700 hover:border-gray-600 transition-colors"
+              className="p-3 sm:p-4 rounded-lg bg-gray-800/50 border border-gray-700 hover:border-gray-600 transition-colors"
             >
-              <div className="flex items-start space-x-3">
+              <div className="flex items-start space-x-2 sm:space-x-3">
                 {getSeverityIcon(suggestion.severity)}
-                <div className="flex-1 space-y-2">
-                  <div className="flex items-center space-x-2">
+                <div className="flex-1 space-y-1.5 sm:space-y-2">
+                  <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
                     <Badge variant={getSeverityVariant(suggestion.severity)} size="sm">
                       {suggestion.severity}
                     </Badge>
@@ -70,14 +70,14 @@ export function AnalysisResults({ results }: AnalysisResultsProps) {
                       {suggestion.category}
                     </Badge>
                     {suggestion.line_number && (
-                      <span className="text-xs text-gray-500">
+                      <span className="text-[10px] sm:text-xs text-gray-500">
                         Line {suggestion.line_number}
                       </span>
                     )}
                   </div>
-                  <p className="text-gray-300 text-sm">{suggestion.message}</p>
+                  <p className="text-gray-300 text-xs sm:text-sm">{suggestion.message}</p>
                   {suggestion.suggestion && (
-                    <p className="text-gray-400 text-sm italic">
+                    <p className="text-gray-400 text-xs sm:text-sm italic">
                       💡 {suggestion.suggestion}
                     </p>
                   )}
@@ -89,9 +89,9 @@ export function AnalysisResults({ results }: AnalysisResultsProps) {
       )}
 
       {results.explanation && (
-        <div className="p-4 rounded-lg bg-blue-900/20 border border-blue-800/50">
-          <h4 className="text-blue-400 font-medium mb-2">Additional Notes</h4>
-          <p className="text-gray-300 text-sm">{results.explanation}</p>
+        <div className="p-3 sm:p-4 rounded-lg bg-blue-900/20 border border-blue-800/50">
+          <h4 className="text-blue-400 font-medium mb-1 sm:mb-2 text-sm sm:text-base">Additional Notes</h4>
+          <p className="text-gray-300 text-xs sm:text-sm">{results.explanation}</p>
         </div>
       )}
     </div>

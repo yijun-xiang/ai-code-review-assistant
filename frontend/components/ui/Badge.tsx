@@ -20,8 +20,8 @@ export function Badge({ children, variant = 'default', size = 'md', className }:
   };
   
   const sizes = {
-    sm: 'px-2 py-0.5 text-xs',
-    md: 'px-2.5 py-1 text-sm',
+    sm: 'px-1.5 sm:px-2 py-0.5 text-[10px] sm:text-xs',
+    md: 'px-2 sm:px-2.5 py-0.5 sm:py-1 text-xs sm:text-sm',
   };
   
   return (

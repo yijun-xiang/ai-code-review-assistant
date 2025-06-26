@@ -1,8 +1,9 @@
 import { useCallback, useRef } from 'react';
-import Editor from '@monaco-editor/react';
+import Editor, { OnMount } from '@monaco-editor/react';
 import { EditorHeader } from './EditorHeader';
 import { SUPPORTED_LANGUAGES } from '../../utils/constants';
 import { MousePointer2, Sparkles } from 'lucide-react';
+import type { editor } from 'monaco-editor';
 
 interface CodeEditorProps {
   code: string;
@@ -21,15 +22,13 @@ export function CodeEditor({
   isPlaceholder = false,
   onEditorFocus,
 }: CodeEditorProps) {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const editorRef = useRef<any>(null);
+  const editorRef = useRef<editor.IStandaloneCodeEditor | null>(null);
 
   const handleEditorChange = useCallback((value: string | undefined) => {
     onCodeChange(value || '');
   }, [onCodeChange]);
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const handleEditorMount = useCallback((editor: any) => {
+  const handleEditorMount: OnMount = useCallback((editor) => {
     editorRef.current = editor;
     
     editor.onDidFocusEditorText(() => {
@@ -67,16 +66,16 @@ export function CodeEditor({
         className="flex-1 min-h-0 overflow-hidden bg-gray-900/50 relative cursor-text"
         onClick={handleContainerClick}
       >
-        {/* Internal hint with prominent styling */}
         {isPlaceholder && (
-          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10 pointer-events-none">
-            <div className="bg-gradient-to-r from-purple-900/40 to-blue-900/40 border border-purple-500/40 rounded-xl px-8 py-4 backdrop-blur-sm shadow-2xl">
-              <div className="flex items-center justify-center space-x-3">
-                <MousePointer2 className="h-5 w-5 text-purple-400 animate-bounce" />
-                <p className="text-purple-300 text-base font-semibold">
-                  Click anywhere to start coding
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10 pointer-events-none px-4">
+            <div className="bg-gradient-to-r from-purple-900/40 to-blue-900/40 border border-purple-500/40 rounded-lg sm:rounded-xl px-4 sm:px-6 md:px-8 py-2 sm:py-3 md:py-4 backdrop-blur-sm shadow-xl sm:shadow-2xl">
+              <div className="flex items-center justify-center space-x-1.5 sm:space-x-2 md:space-x-3">
+                <MousePointer2 className="h-3 w-3 sm:h-4 sm:w-4 md:h-5 md:w-5 text-purple-400 animate-bounce" />
+                <p className="text-purple-300 text-xs sm:text-sm md:text-base font-medium sm:font-semibold">
+                  <span className="hidden sm:inline">Click anywhere to start coding</span>
+                  <span className="sm:hidden">Tap to start</span>
                 </p>
-                <Sparkles className="h-5 w-5 text-purple-400 animate-pulse" />
+                <Sparkles className="h-3 w-3 sm:h-4 sm:w-4 md:h-5 md:w-5 text-purple-400 animate-pulse" />
               </div>
             </div>
           </div>
@@ -109,8 +108,12 @@ export function CodeEditor({
                 vertical: 'visible',
                 horizontal: 'visible',
                 useShadows: false,
-                verticalScrollbarSize: 10,
-                horizontalScrollbarSize: 10,
+                verticalScrollbarSize: 8,
+                horizontalScrollbarSize: 8,
+              },
+              padding: {
+                top: 8,
+                bottom: 8,
               },
             }}
           />

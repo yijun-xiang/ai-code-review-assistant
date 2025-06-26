@@ -63,13 +63,13 @@ export default function Home() {
 
   if (!isClient) {
     return (
-      <div className="flex flex-col h-screen overflow-hidden relative bg-black">
-        <div className="flex-1 flex items-center justify-center">
+      <div className="flex flex-col min-h-screen h-screen overflow-hidden relative bg-black">
+        <div className="flex-1 flex items-center justify-center p-4">
           <div className="text-center">
-            <h1 className="text-3xl font-bold mb-2 text-gray-200">
+            <h1 className="text-xl sm:text-2xl md:text-3xl font-bold mb-2 text-gray-200">
               AI Code Review Assistant
             </h1>
-            <p className="text-sm text-gray-400">Loading...</p>
+            <p className="text-xs sm:text-sm text-gray-400">Loading...</p>
           </div>
         </div>
       </div>
@@ -77,49 +77,44 @@ export default function Home() {
   }
 
   return (
-    <div className="h-screen overflow-hidden bg-black flex flex-col">
-      {/* Background Effects - Subtle */}
-      <ParticleBackground />
-      
-      {/* Minimal Gradient Orbs */}
-      <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute -top-40 -right-40 w-64 h-64 bg-purple-600 rounded-full blur-3xl opacity-10 animate-pulse-glow"></div>
-        <div className="absolute -bottom-40 -left-40 w-64 h-64 bg-blue-600 rounded-full blur-3xl opacity-10 animate-pulse-glow" style={{ animationDelay: '2s' }}></div>
+    <div className="min-h-screen h-screen overflow-hidden bg-black flex flex-col">
+      <div className="hidden sm:block">
+        <ParticleBackground />
       </div>
       
-      {/* Grid Background */}
-      <div className="fixed inset-0 bg-grid-pattern opacity-5 pointer-events-none"></div>
+      <div className="fixed inset-0 overflow-hidden pointer-events-none hidden sm:block">
+        <div className="absolute -top-40 -right-40 w-32 sm:w-48 md:w-64 h-32 sm:h-48 md:h-64 bg-purple-600 rounded-full blur-3xl opacity-10 animate-pulse-glow"></div>
+        <div className="absolute -bottom-40 -left-40 w-32 sm:w-48 md:w-64 h-32 sm:h-48 md:h-64 bg-blue-600 rounded-full blur-3xl opacity-10 animate-pulse-glow" style={{ animationDelay: '2s' }}></div>
+      </div>
       
-      {/* Main Content */}
-      <main className="flex-1 flex flex-col relative z-10">
-        {/* Enhanced Centered Header */}
-        <div className="py-4 border-b border-gray-900 relative">
+      <div className="fixed inset-0 bg-grid-pattern opacity-5 pointer-events-none hidden sm:block"></div>
+      
+      <main className="flex-1 flex flex-col relative z-10 min-h-0">
+        <div className="py-2 sm:py-3 md:py-4 border-b border-gray-900 relative px-2 sm:px-4">
           <div className="absolute inset-0 bg-gradient-to-r from-purple-900/10 via-transparent to-blue-900/10"></div>
           <div className="relative flex items-center justify-center">
             <div className="relative group">
-              <div className="absolute -inset-2 bg-gradient-to-r from-purple-600 to-blue-600 rounded-xl blur-md opacity-20 group-hover:opacity-30 transition duration-300"></div>
-              <div className="relative flex items-center space-x-3 glass-dark px-6 py-2 rounded-xl border border-purple-500/30 group-hover:border-purple-500/50 transition-all">
-                <Brain className="h-6 w-6 text-purple-400 animate-pulse" />
-                <h1 className="text-2xl font-black tracking-tight">
+              <div className="absolute -inset-1 sm:-inset-2 bg-gradient-to-r from-purple-600 to-blue-600 rounded-lg sm:rounded-xl blur-sm sm:blur-md opacity-20 group-hover:opacity-30 transition duration-300 hidden sm:block"></div>
+              <div className="relative flex items-center space-x-1 sm:space-x-2 md:space-x-3 glass-dark px-3 sm:px-4 md:px-6 py-1 sm:py-1.5 md:py-2 rounded-lg sm:rounded-xl border border-purple-500/30 group-hover:border-purple-500/50 transition-all">
+                <Brain className="h-4 w-4 sm:h-5 sm:w-5 md:h-6 md:w-6 text-purple-400 animate-pulse" />
+                <h1 className="text-sm sm:text-lg md:text-2xl font-bold sm:font-black tracking-tight">
                   <span className="bg-clip-text text-transparent bg-gradient-to-r from-purple-400 via-pink-400 to-blue-400 neon-text-subtle">
-                    AI Code Review Assistant
+                    AI Code Review
                   </span>
                 </h1>
               </div>
             </div>
-            <span className="absolute right-4 text-xs text-gray-600">Powered by OpenAI</span>
+            <span className="absolute right-1 sm:right-2 md:right-4 text-[10px] sm:text-xs text-gray-600 hidden sm:inline">Powered by OpenAI</span>
           </div>
-          <p className="text-center text-xs text-gray-500 mt-2">Transform your code with intelligent AI-powered insights</p>
+          <p className="text-center text-[10px] sm:text-xs text-gray-500 mt-1 sm:mt-2 hidden sm:block">Transform your code with intelligent AI-powered insights</p>
         </div>
         
-        {/* Editor and Analysis Section - Maximum Space */}
-        <div className="flex-1 p-4">
+        <div className="flex-1 p-2 sm:p-3 md:p-4 min-h-0 overflow-hidden">
           <div className="h-full max-w-[1600px] mx-auto">
-            <div className="grid grid-cols-1 lg:grid-cols-5 gap-4 h-full">
-              {/* Code Editor */}
-              <div className="lg:col-span-3 flex flex-col h-full">
-                <div className="flex-1 relative group mb-3">
-                  <div className="absolute -inset-0.5 bg-gradient-to-r from-purple-600/20 to-blue-600/20 rounded-lg blur-sm opacity-0 group-hover:opacity-100 transition duration-500"></div>
+            <div className="grid grid-cols-1 lg:grid-cols-5 gap-2 sm:gap-3 md:gap-4 h-full">
+              <div className="lg:col-span-3 flex flex-col min-h-[40vh] lg:min-h-0 lg:h-full">
+                <div className="flex-1 relative group mb-2 sm:mb-3 min-h-0">
+                  <div className="absolute -inset-0.5 bg-gradient-to-r from-purple-600/20 to-blue-600/20 rounded-lg blur-sm opacity-0 group-hover:opacity-100 transition duration-500 hidden sm:block"></div>
                   <div className="relative h-full glass-dark rounded-lg overflow-hidden border border-gray-800">
                     <CodeEditor
                       code={displayCode}
@@ -132,29 +127,27 @@ export default function Home() {
                   </div>
                 </div>
                 
-                {/* Analyze Button */}
                 <Button
                   onClick={handleAnalyze}
                   disabled={status === 'analyzing' || !code.trim() || showPlaceholder}
-                  className="w-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 h-10 text-sm font-semibold shadow-lg"
-                  size="md"
+                  className="w-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 h-8 sm:h-9 md:h-10 text-xs sm:text-sm font-semibold shadow-lg"
+                  size="sm"
                   loading={status === 'analyzing'}
                 >
                   {status === 'analyzing' ? (
                     <span>Analyzing...</span>
                   ) : (
-                    <div className="flex items-center justify-center space-x-2">
-                      <Sparkles className="h-4 w-4" />
+                    <div className="flex items-center justify-center space-x-1 sm:space-x-2">
+                      <Sparkles className="h-3 w-3 sm:h-4 sm:w-4" />
                       <span>Analyze with AI</span>
-                      <ChevronRight className="h-3 w-3" />
+                      <ChevronRight className="h-2 w-2 sm:h-3 sm:w-3" />
                     </div>
                   )}
                 </Button>
               </div>
               
-              {/* Analysis Panel */}
-              <div className="lg:col-span-2 h-full relative group">
-                <div className="absolute -inset-0.5 bg-gradient-to-r from-blue-600/20 to-cyan-600/20 rounded-lg blur-sm opacity-0 group-hover:opacity-100 transition duration-500"></div>
+              <div className="lg:col-span-2 min-h-[35vh] lg:min-h-0 lg:h-full relative group">
+                <div className="absolute -inset-0.5 bg-gradient-to-r from-blue-600/20 to-cyan-600/20 rounded-lg blur-sm opacity-0 group-hover:opacity-100 transition duration-500 hidden sm:block"></div>
                 <div className="relative h-full glass-dark rounded-lg overflow-hidden border border-gray-800">
                   <AnalysisPanel
                     onAnalyze={handleAnalyze}
