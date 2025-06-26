@@ -37,7 +37,9 @@ jobs:
     - name: Build and push frontend image
       run: |
         cd frontend
-        docker build -t ${{ env.ECR_FRONTEND }}:latest .
+        docker build \
+          --build-arg NEXT_PUBLIC_API_URL=http://ai-code-review-alb-2000851462.us-east-1.elb.amazonaws.com \
+          -t ${{ env.ECR_FRONTEND }}:latest .
         docker push ${{ env.ECR_FRONTEND }}:latest
 
     - name: Update ECS services
