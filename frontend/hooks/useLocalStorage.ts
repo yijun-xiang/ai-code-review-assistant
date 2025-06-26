@@ -12,7 +12,16 @@ export function useLocalStorage<T>(
     try {
       const item = window.localStorage.getItem(key);
       if (item) {
-        setStoredValue(JSON.parse(item));
+        const parsedItem = JSON.parse(item);
+        if (key.includes('code') && (parsedItem === '' || parsedItem === null)) {
+          setStoredValue('' as T);
+        } else {
+          setStoredValue(parsedItem);
+        }
+      } else {
+        if (key.includes('code')) {
+          setStoredValue('' as T);
+        }
       }
     } catch (error) {
       console.error(`Error loading localStorage key "${key}":`, error);

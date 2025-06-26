@@ -6,42 +6,60 @@ import { AnalysisPanel } from '../components/analysis/AnalysisPanel';
 import { ParticleBackground } from '../components/effects/ParticleBackground';
 import { useCodeAnalysis } from '../hooks/useCodeAnalysis';
 import { useLocalStorage } from '../hooks/useLocalStorage';
-import { DEFAULT_CODE, EXAMPLE_CODES } from '../utils/constants';
+import { getExampleCode } from '../utils/constants';
 import { Brain, Sparkles, ChevronRight } from 'lucide-react';
 import { Button } from '../components/ui/Button';
 
 export default function Home() {
-  const [code, setCode] = useLocalStorage('ai-code-review-code', DEFAULT_CODE);
+  const [code, setCode] = useLocalStorage('ai-code-review-code', '');
   const [language, setLanguage] = useLocalStorage('ai-code-review-language', 'javascript');
   const { analyzeCode, results, status, error, reset } = useCodeAnalysis();
   const [isClient, setIsClient] = useState(false);
+  const [showPlaceholder, setShowPlaceholder] = useState(true);
 
   useEffect(() => {
     setIsClient(true);
-  }, []);
+    if (code && code.trim() !== '') {
+      setShowPlaceholder(false);
+    } else {
+      setShowPlaceholder(true);
+    }
+  }, [code]);
 
   const handleAnalyze = useCallback(() => {
+    if (!code.trim() || showPlaceholder) {
+      return;
+    }
     analyzeCode(code, language);
-  }, [analyzeCode, code, language]);
+  }, [analyzeCode, code, language, showPlaceholder]);
 
   const handleLanguageChange = useCallback((newLanguage: string) => {
     setLanguage(newLanguage);
     reset();
-    
-    if (code === DEFAULT_CODE || Object.values(EXAMPLE_CODES).includes(code)) {
-      const exampleCode = EXAMPLE_CODES[newLanguage];
-      if (exampleCode) {
-        setCode(exampleCode);
-      }
-    }
-  }, [code, setCode, setLanguage, reset]);
+  }, [setLanguage, reset]);
 
   const handleCodeChange = useCallback((newCode: string) => {
     setCode(newCode);
+    
+    if (newCode === '') {
+      setShowPlaceholder(true);
+    } else {
+      setShowPlaceholder(false);
+    }
+    
     if (status === 'completed' || status === 'error') {
       reset();
     }
   }, [setCode, status, reset]);
+
+  const handleEditorFocus = useCallback(() => {
+    if (showPlaceholder) {
+      setCode('');
+      setShowPlaceholder(false);
+    }
+  }, [showPlaceholder, setCode]);
+
+  const displayCode = showPlaceholder ? getExampleCode(language) : code;
 
   if (!isClient) {
     return (
@@ -104,10 +122,12 @@ export default function Home() {
                   <div className="absolute -inset-0.5 bg-gradient-to-r from-purple-600/20 to-blue-600/20 rounded-lg blur-sm opacity-0 group-hover:opacity-100 transition duration-500"></div>
                   <div className="relative h-full glass-dark rounded-lg overflow-hidden border border-gray-800">
                     <CodeEditor
-                      code={code}
+                      code={displayCode}
                       language={language}
                       onCodeChange={handleCodeChange}
                       onLanguageChange={handleLanguageChange}
+                      isPlaceholder={showPlaceholder}
+                      onEditorFocus={handleEditorFocus}
                     />
                   </div>
                 </div>
@@ -115,7 +135,7 @@ export default function Home() {
                 {/* Analyze Button */}
                 <Button
                   onClick={handleAnalyze}
-                  disabled={status === 'analyzing' || !code.trim()}
+                  disabled={status === 'analyzing' || !code.trim() || showPlaceholder}
                   className="w-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 h-10 text-sm font-semibold shadow-lg"
                   size="md"
                   loading={status === 'analyzing'}

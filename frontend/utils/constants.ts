@@ -13,56 +13,98 @@ export const SUPPORTED_LANGUAGES = [
   { value: 'ruby', label: 'Ruby' },
 ];
 
-export const DEFAULT_CODE = `// Welcome to AI Code Analyzer
-// Paste your code here for intelligent analysis
+export const DEFAULT_CODE = `// Welcome to AI Code Review Assistant!
+// Start typing to begin your code review journey...
 
-function fibonacci(n) {
+function calculateFibonacci(n) {
+  // TODO: Optimize this recursive approach
   if (n <= 1) return n;
-  return fibonacci(n - 1) + fibonacci(n - 2);
+  return calculateFibonacci(n - 1) + calculateFibonacci(n - 2);
 }
 
-class DataProcessor {
-  constructor(data) {
-    this.data = data;
+class UserDataProcessor {
+  constructor(userData) {
+    this.userData = userData;
   }
   
-  process() {
-    return this.data.map(item => {
-      return item * 2;
+  processData() {
+    // Transform user data for analytics
+    return this.userData.map(user => {
+      return {
+        ...user,
+        score: user.score * 2
+      };
     });
   }
 }
 
-// Try pasting your own code here...`;
+// Start coding and get instant AI-powered feedback!`;
+
+export function getExampleCode(language: string): string {
+  return EXAMPLE_CODES[language] || EXAMPLE_CODES.javascript || DEFAULT_CODE;
+}
 
 export const EXAMPLE_CODES: Record<string, string> = {
   javascript: DEFAULT_CODE,
-  typescript: `interface User {
+  typescript: `// TypeScript example - Start typing to replace this code
+
+interface User {
   id: number;
   name: string;
   email: string;
+  isActive: boolean;
 }
 
 class UserService {
   private users: User[] = [];
   
   addUser(user: User): void {
+    // Add user to the collection
     this.users.push(user);
+    console.log(\`User \${user.name} added successfully\`);
   }
   
-  findUser(id: number): User | undefined {
-    return this.users.find(u => u.id === id);
+  findUserById(id: number): User | undefined {
+    // Find user by their unique ID
+    return this.users.find(user => user.id === id);
   }
-}`,
-  python: `def fibonacci(n):
+  
+  getActiveUsers(): User[] {
+    // Filter only active users
+    return this.users.filter(user => user.isActive);
+  }
+}
+
+// Your code goes here...`,
+  python: `# Python example - Start typing to replace this code
+
+def calculate_fibonacci(n):
+    """Calculate Fibonacci number recursively"""
     if n <= 1:
         return n
-    return fibonacci(n-1) + fibonacci(n-2)
+    return calculate_fibonacci(n-1) + calculate_fibonacci(n-2)
 
-class DataProcessor:
-    def __init__(self, data):
-        self.data = data
+class UserDataProcessor:
+    """Process user data for analytics"""
     
-    def process(self):
-        return [item * 2 for item in self.data]`,
+    def __init__(self, user_data):
+        self.user_data = user_data
+    
+    def process_data(self):
+        """Transform user scores"""
+        return [
+            {**user, 'score': user['score'] * 2}
+            for user in self.user_data
+        ]
+    
+    def get_top_users(self, limit=10):
+        """Get top performing users"""
+        sorted_users = sorted(
+            self.user_data, 
+            key=lambda x: x['score'], 
+            reverse=True
+        )
+        return sorted_users[:limit]
+
+# Start coding here...`,
 };

@@ -232,3 +232,24 @@
     opacity: 1;
   }
 }
+
+.monaco-editor .placeholder-text {
+  opacity: 0.35 !important;
+  font-style: italic !important;
+  color: #4b5563 !important;
+}
+
+.monaco-editor.focused .placeholder-text {
+  opacity: 0.25 !important;
+}
+
+.monaco-editor.show-placeholder .cursor {
+  background-color: #8b5cf6 !important;
+  width: 2px !important;
+  animation: blink 1s ease-in-out infinite;
+}
+
+@keyframes blink {
+  0%, 50%, 100% { opacity: 1; }
+  25%, 75% { opacity: 0; }
+}

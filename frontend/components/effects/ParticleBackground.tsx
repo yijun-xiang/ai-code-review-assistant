@@ -23,7 +23,6 @@ export function ParticleBackground() {
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    // Set canvas size
     const resizeCanvas = () => {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
@@ -31,7 +30,6 @@ export function ParticleBackground() {
     resizeCanvas();
     window.addEventListener('resize', resizeCanvas);
 
-    // Mouse tracking
     const handleMouseMove = (e: MouseEvent) => {
       mouseRef.current = {
         x: e.clientX,
@@ -40,13 +38,11 @@ export function ParticleBackground() {
     };
     window.addEventListener('mousemove', handleMouseMove);
 
-    // Particle configuration
     const particles: Particle[] = [];
     const particleCount = 60; 
     const maxDistance = 150;
     const mouseInfluenceRadius = 200;
     
-    // Color palette
     const colors = [
       'rgba(139, 92, 246, opacity)', // Purple
       'rgba(236, 72, 153, opacity)', // Pink
@@ -55,7 +51,6 @@ export function ParticleBackground() {
       'rgba(251, 191, 36, opacity)',  // Yellow
     ];
 
-    // Create particles
     for (let i = 0; i < particleCount; i++) {
       const colorTemplate = colors[Math.floor(Math.random() * colors.length)];
       particles.push({
@@ -73,13 +68,10 @@ export function ParticleBackground() {
     const animate = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      // Update and draw particles
       particles.forEach((particle, i) => {
-        // Pulse effect
         particle.pulsePhase += 0.02;
         const pulseFactor = 1 + Math.sin(particle.pulsePhase) * 0.2;
 
-        // Mouse interaction
         const dx = mouseRef.current.x - particle.x;
         const dy = mouseRef.current.y - particle.y;
         const distance = Math.sqrt(dx * dx + dy * dy);
@@ -90,15 +82,12 @@ export function ParticleBackground() {
           particle.vy += (dy / distance) * force * 0.03;
         }
 
-        // Update position
         particle.x += particle.vx;
         particle.y += particle.vy;
 
-        // Apply friction
         particle.vx *= 0.99;
         particle.vy *= 0.99;
 
-        // Bounce off walls with dampening
         if (particle.x < particle.radius || particle.x > canvas.width - particle.radius) {
           particle.vx *= -0.9;
           particle.x = particle.x < particle.radius ? particle.radius : canvas.width - particle.radius;
@@ -108,10 +97,8 @@ export function ParticleBackground() {
           particle.y = particle.y < particle.radius ? particle.radius : canvas.height - particle.radius;
         }
 
-        // Draw particle with glow effect
         const currentRadius = particle.radius * pulseFactor;
         
-        // Outer glow
         const gradient = ctx.createRadialGradient(
           particle.x, particle.y, 0,
           particle.x, particle.y, currentRadius * 3
@@ -124,13 +111,11 @@ export function ParticleBackground() {
         ctx.fillStyle = gradient;
         ctx.fill();
 
-        // Inner particle
         ctx.beginPath();
         ctx.arc(particle.x, particle.y, currentRadius, 0, Math.PI * 2);
         ctx.fillStyle = particle.color.replace('opacity', String(particle.opacity * 2));
         ctx.fill();
 
-        // Draw connections
         for (let j = i + 1; j < particles.length; j++) {
           const other = particles[j];
           const distance = Math.sqrt(
@@ -140,7 +125,6 @@ export function ParticleBackground() {
           if (distance < maxDistance) {
             const opacity = (1 - distance / maxDistance) * 0.2;
             
-            // Create gradient for connection
             const lineGradient = ctx.createLinearGradient(
               particle.x, particle.y,
               other.x, other.y
