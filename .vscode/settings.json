@@ -11,5 +11,9 @@
   "eslint.workingDirectories": [
     "./frontend",
     "./backend"
-  ]
+  ],
+  "docker.languageserver.diagnostics.enable": false,
+  "docker.languageserver.diagnostics.deprecatedMaintainer": "ignore",
+  "docker.languageserver.diagnostics.instructionCasing": "ignore",
+  "docker.languageserver.diagnostics.instructionCmdMultiple": "ignore"
 }

@@ -1,0 +1,45 @@
+{
+    "family": "ai-code-review-backend",
+    "networkMode": "awsvpc",
+    "requiresCompatibilities": ["FARGATE"],
+    "cpu": "512",
+    "memory": "1024",
+    "executionRoleArn": "arn:aws:iam::035711439189:role/ai-code-review-ecs-task-execution-role",
+    "containerDefinitions": [
+      {
+        "name": "backend",
+        "image": "035711439189.dkr.ecr.us-east-1.amazonaws.com/ai-code-review-backend:latest",
+        "essential": true,
+        "portMappings": [
+          {
+            "containerPort": 8000,
+            "protocol": "tcp"
+          }
+        ],
+        "environment": [
+          {
+            "name": "BACKEND_CORS_ORIGINS",
+            "value": "http://localhost:3000,https://your-domain.com"
+          },
+          {
+            "name": "DEBUG",
+            "value": "False"
+          }
+        ],
+        "secrets": [
+          {
+            "name": "OPENAI_API_KEY",
+            "valueFrom": "arn:aws:secretsmanager:us-east-1:035711439189:secret:ai-code-review-openai-api-key"
+          }
+        ],
+        "logConfiguration": {
+          "logDriver": "awslogs",
+          "options": {
+            "awslogs-group": "/ecs/ai-code-review-backend",
+            "awslogs-region": "us-east-1",
+            "awslogs-stream-prefix": "ecs"
+          }
+        }
+      }
+    ]
+  }

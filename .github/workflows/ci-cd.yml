@@ -1,0 +1,49 @@
+name: Deploy to AWS ECS
+
+on:
+  push:
+    branches: [ main ]
+
+env:
+  AWS_REGION: us-east-1
+  ECR_BACKEND: 035711439189.dkr.ecr.us-east-1.amazonaws.com/ai-code-review-backend
+  ECR_FRONTEND: 035711439189.dkr.ecr.us-east-1.amazonaws.com/ai-code-review-frontend
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v2
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: ${{ env.AWS_REGION }}
+
+    - name: Login to Amazon ECR
+      id: login-ecr
+      uses: aws-actions/amazon-ecr-login@v1
+
+    - name: Build and push backend image
+      run: |
+        cd backend
+        docker build -t ${{ env.ECR_BACKEND }}:latest .
+        docker push ${{ env.ECR_BACKEND }}:latest
+
+    - name: Build and push frontend image
+      run: |
+        cd frontend
+        docker build -t ${{ env.ECR_FRONTEND }}:latest .
+        docker push ${{ env.ECR_FRONTEND }}:latest
+
+    - name: Update ECS services
+      run: |
+        # Force new deployment for backend
+        aws ecs update-service --cluster ai-code-review-cluster --service ai-code-review-backend-service --force-new-deployment
+        
+        # Force new deployment for frontend
+        aws ecs update-service --cluster ai-code-review-cluster --service ai-code-review-frontend-service --force-new-deployment

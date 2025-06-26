@@ -1,0 +1,35 @@
+{
+    "family": "ai-code-review-frontend",
+    "networkMode": "awsvpc",
+    "requiresCompatibilities": ["FARGATE"],
+    "cpu": "256",
+    "memory": "512",
+    "executionRoleArn": "arn:aws:iam::035711439189:role/ai-code-review-ecs-task-execution-role",
+    "containerDefinitions": [
+      {
+        "name": "frontend",
+        "image": "035711439189.dkr.ecr.us-east-1.amazonaws.com/ai-code-review-frontend:latest",
+        "essential": true,
+        "portMappings": [
+          {
+            "containerPort": 3000,
+            "protocol": "tcp"
+          }
+        ],
+        "environment": [
+          {
+            "name": "NEXT_PUBLIC_API_URL",
+            "value": "http://backend:8000"
+          }
+        ],
+        "logConfiguration": {
+          "logDriver": "awslogs",
+          "options": {
+            "awslogs-group": "/ecs/ai-code-review-frontend",
+            "awslogs-region": "us-east-1",
+            "awslogs-stream-prefix": "ecs"
+          }
+        }
+      }
+    ]
+  }

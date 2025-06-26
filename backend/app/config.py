@@ -14,6 +14,7 @@ class Settings:
     BACKEND_CORS_ORIGINS = [
         "http://localhost:3000",
         "http://127.0.0.1:3000",
+        "http://ai-code-review-alb-2000851462.us-east-1.elb.amazonaws.com",
     ]
     
     DEBUG = os.getenv("DEBUG", "True").lower() == "true"
