@@ -36,7 +36,7 @@ export function AnalysisPanel({ onAnalyze, status, results, error, showAnalyzeBu
   const renderContent = () => {
     if (error) {
       return (
-        <div className="flex flex-col items-center justify-center h-full text-center p-3 sm:p-4 md:p-6">
+        <div className="h-full overflow-y-auto flex flex-col items-center justify-center text-center p-3 sm:p-4 md:p-6">
           <div className="relative">
             <div className="absolute inset-0 bg-red-500/20 blur-xl sm:blur-2xl animate-pulse"></div>
             <AlertTriangle className="h-8 w-8 sm:h-10 sm:w-10 md:h-12 md:w-12 text-red-400 relative z-10" />
@@ -52,7 +52,7 @@ export function AnalysisPanel({ onAnalyze, status, results, error, showAnalyzeBu
 
     if (status === 'analyzing') {
       return (
-        <div className="flex flex-col items-center justify-center h-full text-center p-3 sm:p-4 md:p-6">
+        <div className="h-full overflow-y-auto flex flex-col items-center justify-center text-center p-3 sm:p-4 md:p-6">
           <div className="relative mb-4 sm:mb-6">
             <div className="absolute inset-0 bg-purple-500/30 blur-xl sm:blur-2xl animate-pulse-glow"></div>
             <div className="relative">
@@ -82,14 +82,14 @@ export function AnalysisPanel({ onAnalyze, status, results, error, showAnalyzeBu
 
     if (status === 'completed' && results) {
       return (
-        <div className="p-3 sm:p-4 h-full overflow-y-auto custom-scrollbar">
+        <div className="h-full overflow-y-auto custom-scrollbar p-3 sm:p-4">
           <AnalysisResults results={results} />
         </div>
       );
     }
 
     return (
-      <div className="flex flex-col items-center justify-center h-full text-center p-3 sm:p-4 md:p-6">
+      <div className="h-full overflow-y-auto flex flex-col items-center justify-center text-center p-3 sm:p-4 md:p-6">
         <div className="relative mb-4 sm:mb-6">
           <div className="absolute inset-0 bg-gradient-to-br from-purple-500/20 to-blue-500/20 blur-xl sm:blur-2xl animate-pulse"></div>
           <div className="relative glass-subtle p-4 sm:p-5 md:p-6 rounded-xl sm:rounded-2xl">
@@ -130,8 +130,8 @@ export function AnalysisPanel({ onAnalyze, status, results, error, showAnalyzeBu
   };
 
   return (
-    <div className="h-full flex flex-col glass-dark">
-      <div className="flex items-center justify-between px-3 sm:px-4 py-2 sm:py-3 border-b border-gray-800 bg-gradient-to-r from-gray-900/50 to-gray-800/50">
+    <div className="h-full flex flex-col">
+      <div className="flex items-center justify-between px-3 sm:px-4 py-2 sm:py-3 border-b border-gray-800 bg-gradient-to-r from-gray-900/50 to-gray-800/50 flex-shrink-0">
         <div className="flex items-center space-x-1.5 sm:space-x-2">
           <div className="relative">
             <Brain className="h-4 w-4 sm:h-5 sm:w-5 text-purple-400 animate-pulse" />
@@ -153,12 +153,12 @@ export function AnalysisPanel({ onAnalyze, status, results, error, showAnalyzeBu
         )}
       </div>
       
-      <div className="flex-1 overflow-hidden">
+      <div className="flex-1 min-h-0 overflow-auto">
         {renderContent()}
       </div>
       
       {showAnalyzeButton && status === 'completed' && results && (
-        <div className="p-3 sm:p-4 border-t border-gray-800 bg-gradient-to-r from-gray-900/50 to-gray-800/50">
+        <div className="p-3 sm:p-4 border-t border-gray-800 bg-gradient-to-r from-gray-900/50 to-gray-800/50 flex-shrink-0">
           <Button
             onClick={onAnalyze}
             variant="secondary"
@@ -196,7 +196,7 @@ function StatCard({ icon, label, value }: { icon: React.ReactNode; label: string
     <div className="glass-subtle p-2 sm:p-3 rounded-lg border border-gray-800 hover:border-gray-700 transition-all duration-300">
       <div className="flex flex-col items-center space-y-0.5 sm:space-y-1">
         <div className="text-gray-500">{icon}</div>
-        <div className="text-sm sm:text-lg font-bold text-gray-200">{value}</div>
+        <div className="text-xs sm:text-sm md:text-lg font-bold text-gray-200">{value}</div>
         <div className="text-[8px] sm:text-[10px] text-gray-500">{label}</div>
       </div>
     </div>

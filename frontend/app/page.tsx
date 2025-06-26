@@ -99,7 +99,7 @@ export default function Home() {
                 <Brain className="h-4 w-4 sm:h-5 sm:w-5 md:h-6 md:w-6 text-purple-400 animate-pulse" />
                 <h1 className="text-sm sm:text-lg md:text-2xl font-bold sm:font-black tracking-tight">
                   <span className="bg-clip-text text-transparent bg-gradient-to-r from-purple-400 via-pink-400 to-blue-400 neon-text-subtle">
-                    AI Code Review
+                    AI Code Review Assistant
                   </span>
                 </h1>
               </div>
@@ -146,9 +146,9 @@ export default function Home() {
                 </Button>
               </div>
               
-              <div className="lg:col-span-2 min-h-[35vh] lg:min-h-0 lg:h-full relative group">
+              <div className="lg:col-span-2 min-h-[35vh] lg:min-h-0 lg:h-full relative group overflow-hidden">
                 <div className="absolute -inset-0.5 bg-gradient-to-r from-blue-600/20 to-cyan-600/20 rounded-lg blur-sm opacity-0 group-hover:opacity-100 transition duration-500 hidden sm:block"></div>
-                <div className="relative h-full glass-dark rounded-lg overflow-hidden border border-gray-800">
+                <div className="relative h-full glass-dark rounded-lg overflow-hidden border border-gray-800 flex flex-col">
                   <AnalysisPanel
                     onAnalyze={handleAnalyze}
                     status={status}
