@@ -36,7 +36,7 @@ export function AnalysisPanel({ onAnalyze, status, results, error, showAnalyzeBu
   const renderContent = () => {
     if (error) {
       return (
-        <div className="h-full overflow-y-auto flex flex-col items-center justify-center text-center p-3 sm:p-4 md:p-6">
+        <div className="h-full overflow-y-auto -webkit-overflow-scrolling-touch flex flex-col items-center justify-center text-center p-3 sm:p-4 md:p-6">
           <div className="relative">
             <div className="absolute inset-0 bg-red-500/20 blur-xl sm:blur-2xl animate-pulse"></div>
             <AlertTriangle className="h-8 w-8 sm:h-10 sm:w-10 md:h-12 md:w-12 text-red-400 relative z-10" />
@@ -52,7 +52,7 @@ export function AnalysisPanel({ onAnalyze, status, results, error, showAnalyzeBu
 
     if (status === 'analyzing') {
       return (
-        <div className="h-full overflow-y-auto flex flex-col items-center justify-center text-center p-3 sm:p-4 md:p-6">
+        <div className="h-full overflow-y-auto -webkit-overflow-scrolling-touch flex flex-col items-center justify-center text-center p-3 sm:p-4 md:p-6">
           <div className="relative mb-4 sm:mb-6">
             <div className="absolute inset-0 bg-purple-500/30 blur-xl sm:blur-2xl animate-pulse-glow"></div>
             <div className="relative">
@@ -82,14 +82,14 @@ export function AnalysisPanel({ onAnalyze, status, results, error, showAnalyzeBu
 
     if (status === 'completed' && results) {
       return (
-        <div className="h-full overflow-y-auto custom-scrollbar p-3 sm:p-4">
+        <div className="h-full overflow-y-auto -webkit-overflow-scrolling-touch custom-scrollbar p-3 sm:p-4">
           <AnalysisResults results={results} />
         </div>
       );
     }
 
     return (
-      <div className="h-full overflow-y-auto flex flex-col items-center justify-center text-center p-3 sm:p-4 md:p-6">
+      <div className="h-full overflow-y-auto -webkit-overflow-scrolling-touch flex flex-col items-center justify-center text-center p-3 sm:p-4 md:p-6">
         <div className="relative mb-4 sm:mb-6">
           <div className="absolute inset-0 bg-gradient-to-br from-purple-500/20 to-blue-500/20 blur-xl sm:blur-2xl animate-pulse"></div>
           <div className="relative glass-subtle p-4 sm:p-5 md:p-6 rounded-xl sm:rounded-2xl">
@@ -153,7 +153,7 @@ export function AnalysisPanel({ onAnalyze, status, results, error, showAnalyzeBu
         )}
       </div>
       
-      <div className="flex-1 min-h-0 overflow-auto">
+      <div className="flex-1 min-h-0">
         {renderContent()}
       </div>
       

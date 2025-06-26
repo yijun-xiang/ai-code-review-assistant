@@ -63,7 +63,7 @@ export default function Home() {
 
   if (!isClient) {
     return (
-      <div className="flex flex-col min-h-screen h-screen overflow-hidden relative bg-black">
+      <div className="flex flex-col min-h-screen bg-black">
         <div className="flex-1 flex items-center justify-center p-4">
           <div className="text-center">
             <h1 className="text-xl sm:text-2xl md:text-3xl font-bold mb-2 text-gray-200">
@@ -77,7 +77,7 @@ export default function Home() {
   }
 
   return (
-    <div className="min-h-screen h-screen overflow-hidden bg-black flex flex-col">
+    <div className="min-h-screen bg-black">
       <div className="hidden sm:block">
         <ParticleBackground />
       </div>
@@ -89,7 +89,7 @@ export default function Home() {
       
       <div className="fixed inset-0 bg-grid-pattern opacity-5 pointer-events-none hidden sm:block"></div>
       
-      <main className="flex-1 flex flex-col relative z-10 min-h-0">
+      <main className="relative z-10 flex flex-col min-h-screen">
         <div className="py-2 sm:py-3 md:py-4 border-b border-gray-900 relative px-2 sm:px-4">
           <div className="absolute inset-0 bg-gradient-to-r from-purple-900/10 via-transparent to-blue-900/10"></div>
           <div className="relative flex items-center justify-center">
@@ -109,11 +109,11 @@ export default function Home() {
           <p className="text-center text-[10px] sm:text-xs text-gray-500 mt-1 sm:mt-2 hidden sm:block">Transform your code with intelligent AI-powered insights</p>
         </div>
         
-        <div className="flex-1 p-2 sm:p-3 md:p-4 min-h-0 overflow-hidden">
+        <div className="flex-1 p-2 sm:p-3 md:p-4">
           <div className="h-full max-w-[1600px] mx-auto">
-            <div className="grid grid-cols-1 lg:grid-cols-5 gap-2 sm:gap-3 md:gap-4 h-full">
-              <div className="lg:col-span-3 flex flex-col min-h-[40vh] lg:min-h-0 lg:h-full">
-                <div className="flex-1 relative group mb-2 sm:mb-3 min-h-0">
+            <div className="grid grid-cols-1 lg:grid-cols-5 gap-2 sm:gap-3 md:gap-4 min-h-[calc(100vh-120px)] lg:min-h-[calc(100vh-140px)]">
+              <div className="lg:col-span-3 flex flex-col min-h-[50vh] lg:min-h-0">
+                <div className="flex-1 relative group mb-2 sm:mb-3">
                   <div className="absolute -inset-0.5 bg-gradient-to-r from-purple-600/20 to-blue-600/20 rounded-lg blur-sm opacity-0 group-hover:opacity-100 transition duration-500 hidden sm:block"></div>
                   <div className="relative h-full glass-dark rounded-lg overflow-hidden border border-gray-800">
                     <CodeEditor
@@ -146,7 +146,7 @@ export default function Home() {
                 </Button>
               </div>
               
-              <div className="lg:col-span-2 min-h-[35vh] lg:min-h-0 lg:h-full relative group overflow-hidden">
+              <div className="lg:col-span-2 min-h-[40vh] lg:min-h-0 relative group">
                 <div className="absolute -inset-0.5 bg-gradient-to-r from-blue-600/20 to-cyan-600/20 rounded-lg blur-sm opacity-0 group-hover:opacity-100 transition duration-500 hidden sm:block"></div>
                 <div className="relative h-full glass-dark rounded-lg overflow-hidden border border-gray-800 flex flex-col">
                   <AnalysisPanel

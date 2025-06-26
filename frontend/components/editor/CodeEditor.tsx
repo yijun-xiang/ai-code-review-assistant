@@ -59,7 +59,7 @@ export function CodeEditor({
   const characterCount = code.length;
 
   return (
-    <div className="h-full flex flex-col overflow-hidden">
+    <div className="h-full flex flex-col">
       <EditorHeader
         languages={SUPPORTED_LANGUAGES}
         selectedLanguage={language}
@@ -69,7 +69,7 @@ export function CodeEditor({
       />
       
       <div 
-        className="flex-1 min-h-0 overflow-hidden bg-gray-900/50 relative cursor-text"
+        className="flex-1 min-h-0 bg-gray-900/50 relative cursor-text"
         onClick={handleContainerClick}
       >
         {isPlaceholder && (
@@ -133,6 +133,8 @@ export function CodeEditor({
                 top: 8,
                 bottom: 8,
               },
+              domReadOnly: false,
+              readOnly: false,
             }}
           />
         </div>

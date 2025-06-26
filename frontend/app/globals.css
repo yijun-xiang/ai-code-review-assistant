@@ -26,7 +26,7 @@
 
   html,
   body {
-    height: 100%;
+    min-height: 100%;
     margin: 0;
     padding: 0;
   }
@@ -34,11 +34,12 @@
   body {
     background-color: #000000;
     color: #f3f4f6;
+    -webkit-overflow-scrolling: touch;
   }
 }
 
 #__next {
-  height: 100%;
+  min-height: 100%;
 }
 
 .gradient-bg {

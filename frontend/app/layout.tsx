@@ -17,9 +17,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="h-full">
-      <body className={`${inter.className} h-full bg-black text-gray-100 overflow-hidden overscroll-none`}>
+      <body className={`${inter.className} min-h-full bg-black text-gray-100`}>
         <div className="gradient-bg" />
-        <div className="relative z-10 h-full">
+        <div className="relative z-10 min-h-full">
           {children}
         </div>
       </body>
