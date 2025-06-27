@@ -1,6 +1,6 @@
 import { useState, useCallback } from 'react';
 import { CodeReviewResponse, AnalysisStatus } from '@/types';
-import { codeReviewService } from '@/services/api';
+import { codeReviewService, RateLimitError } from '@/services/api';
 
 interface UseCodeAnalysisReturn {
   analyzeCode: (code: string, language: string) => Promise<void>;
@@ -33,7 +33,13 @@ export function useCodeAnalysis(): UseCodeAnalysisReturn {
       setResults(response);
       setStatus('completed');
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Analysis failed');
+      if (err instanceof RateLimitError) {
+        setError(err.message);
+      } else if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError('Analysis failed');
+      }
       setStatus('error');
     }
   }, []);

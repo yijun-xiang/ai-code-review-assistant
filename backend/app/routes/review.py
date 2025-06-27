@@ -1,9 +1,10 @@
-from fastapi import APIRouter, HTTPException, Depends
+from fastapi import APIRouter, HTTPException, Depends, Request
 import logging
 
 from ..models import CodeReviewRequest, CodeReviewResponse
 from ..services.ai_reviewer import get_ai_reviewer, AICodeReviewer
 from ..config import settings
+from ..middleware.rate_limit import rate_limiter
 
 logger = logging.getLogger(__name__)
 
@@ -50,6 +51,23 @@ async def review_code(
             status_code=500, 
             detail="An error occurred during code review. Please try again."
         )
+
+@router.get("/rate-limit")
+async def get_rate_limit_info(request: Request):
+    client_ip = request.client.host
+    if request.headers.get("X-Forwarded-For"):
+        client_ip = request.headers.get("X-Forwarded-For").split(",")[0].strip()
+    elif request.headers.get("X-Real-IP"):
+        client_ip = request.headers.get("X-Real-IP")
+    
+    remaining = await rate_limiter.get_remaining_requests(client_ip)
+    
+    return {
+        "max_requests": rate_limiter.max_requests,
+        "window_hours": rate_limiter.window_hours,
+        "remaining_requests": remaining,
+        "is_limited": remaining <= 0
+    }
 
 @router.get("/languages")
 async def get_supported_languages():

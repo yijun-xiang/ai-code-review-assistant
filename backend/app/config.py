@@ -18,5 +18,8 @@ class Settings:
     ]
     
     DEBUG = os.getenv("DEBUG", "True").lower() == "true"
+    
+    RATE_LIMIT_MAX_REQUESTS = int(os.getenv("RATE_LIMIT_MAX_REQUESTS", "10"))
+    RATE_LIMIT_WINDOW_HOURS = int(os.getenv("RATE_LIMIT_WINDOW_HOURS", "24"))
 
 settings = Settings()

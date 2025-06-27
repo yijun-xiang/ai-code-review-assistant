@@ -1,10 +1,10 @@
-
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 import logging
 
 from .config import settings
 from .models import CodeReviewRequest, CodeReviewResponse, ReviewSuggestion
+from .middleware.rate_limit import rate_limit_middleware
 
 logging.basicConfig(
     level=logging.INFO,
@@ -25,6 +25,8 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+app.middleware("http")(rate_limit_middleware)
 
 @app.get("/")
 async def root():

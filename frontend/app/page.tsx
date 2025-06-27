@@ -7,8 +7,9 @@ import { ParticleBackground } from '../components/effects/ParticleBackground';
 import { useCodeAnalysis } from '../hooks/useCodeAnalysis';
 import { useLocalStorage } from '../hooks/useLocalStorage';
 import { getExampleCode } from '../utils/constants';
-import { Brain, Sparkles, ChevronRight } from 'lucide-react';
+import { Brain, Sparkles, ChevronRight, AlertCircle } from 'lucide-react';
 import { Button } from '../components/ui/Button';
+import { codeReviewService, RateLimitInfo } from '../services/api';
 
 export default function Home() {
   const [code, setCode] = useLocalStorage('ai-code-review-code', '');
@@ -16,6 +17,7 @@ export default function Home() {
   const { analyzeCode, results, status, error, reset } = useCodeAnalysis();
   const [isClient, setIsClient] = useState(false);
   const [showPlaceholder, setShowPlaceholder] = useState(true);
+  const [rateLimitInfo, setRateLimitInfo] = useState<RateLimitInfo | null>(null);
 
   useEffect(() => {
     setIsClient(true);
@@ -26,11 +28,33 @@ export default function Home() {
     }
   }, [code]);
 
-  const handleAnalyze = useCallback(() => {
+  useEffect(() => {
+    const fetchRateLimitInfo = async () => {
+      try {
+        const info = await codeReviewService.getRateLimitInfo();
+        setRateLimitInfo(info);
+      } catch (error) {
+        console.error('Failed to fetch rate limit info:', error);
+      }
+    };
+
+    fetchRateLimitInfo();
+    const interval = setInterval(fetchRateLimitInfo, 30000);
+    return () => clearInterval(interval);
+  }, []);
+
+  const handleAnalyze = useCallback(async () => {
     if (!code.trim() || showPlaceholder) {
       return;
     }
-    analyzeCode(code, language);
+    await analyzeCode(code, language);
+    
+    try {
+      const info = await codeReviewService.getRateLimitInfo();
+      setRateLimitInfo(info);
+    } catch (error) {
+      console.error('Failed to fetch rate limit info:', error);
+    }
   }, [analyzeCode, code, language, showPlaceholder]);
 
   const handleLanguageChange = useCallback((newLanguage: string) => {
@@ -127,23 +151,48 @@ export default function Home() {
                   </div>
                 </div>
                 
-                <Button
-                  onClick={handleAnalyze}
-                  disabled={status === 'analyzing' || !code.trim() || showPlaceholder}
-                  className="w-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 h-8 sm:h-9 md:h-10 text-xs sm:text-sm font-semibold shadow-lg"
-                  size="sm"
-                  loading={status === 'analyzing'}
-                >
-                  {status === 'analyzing' ? (
-                    <span>Analyzing...</span>
-                  ) : (
-                    <div className="flex items-center justify-center space-x-1 sm:space-x-2">
-                      <Sparkles className="h-3 w-3 sm:h-4 sm:w-4" />
-                      <span>Analyze with AI</span>
-                      <ChevronRight className="h-2 w-2 sm:h-3 sm:w-3" />
+                <div className="space-y-2">
+                  <Button
+                    onClick={handleAnalyze}
+                    disabled={status === 'analyzing' || !code.trim() || showPlaceholder || (rateLimitInfo?.is_limited ?? false)}
+                    className="w-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 h-8 sm:h-9 md:h-10 text-xs sm:text-sm font-semibold shadow-lg"
+                    size="sm"
+                    loading={status === 'analyzing'}
+                  >
+                    {status === 'analyzing' ? (
+                      <span>Analyzing...</span>
+                    ) : rateLimitInfo?.is_limited ? (
+                      <div className="flex items-center justify-center space-x-1 sm:space-x-2">
+                        <AlertCircle className="h-3 w-3 sm:h-4 sm:w-4" />
+                        <span>Rate Limit Reached</span>
+                      </div>
+                    ) : (
+                      <div className="flex items-center justify-center space-x-1 sm:space-x-2">
+                        <Sparkles className="h-3 w-3 sm:h-4 sm:w-4" />
+                        <span>Analyze with AI</span>
+                        <ChevronRight className="h-2 w-2 sm:h-3 sm:w-3" />
+                      </div>
+                    )}
+                  </Button>
+                  
+                  {rateLimitInfo && (
+                    <div className="flex justify-center">
+                      <div className={`inline-flex items-center space-x-2 px-3 py-1 rounded-full text-xs ${
+                        rateLimitInfo.remaining_requests === 0 
+                          ? 'bg-red-900/30 text-red-400 border border-red-800/50' 
+                          : rateLimitInfo.remaining_requests <= 3 
+                          ? 'bg-yellow-900/30 text-yellow-400 border border-yellow-800/50'
+                          : 'bg-green-900/30 text-green-400 border border-green-800/50'
+                      }`}>
+                        <AlertCircle className="h-3 w-3" />
+                        <span>
+                          {rateLimitInfo.remaining_requests} / {rateLimitInfo.max_requests} requests remaining
+                          <span className="text-gray-500 ml-1">({rateLimitInfo.window_hours}h limit)</span>
+                        </span>
+                      </div>
                     </div>
                   )}
-                </Button>
+                </div>
               </div>
               
               <div className="lg:col-span-2 min-h-[40vh] lg:min-h-0 relative group">
