@@ -272,14 +272,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - AWS for cloud infrastructure
 - All contributors and testers
 
-## 📧 Contact
-
-**Yijun Xiang** - [yijunxiang.com](https://yijunxiang.com)
-
-Project Link: [https://github.com/yourusername/ai-code-review-assistant](https://github.com/yourusername/ai-code-review-assistant)
-
----
-
 <div align="center">
   <p>If you found this project helpful, please consider giving it a ⭐️!</p>
   <a href="https://www.buymeacoffee.com/yourusername">
