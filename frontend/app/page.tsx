@@ -21,6 +21,15 @@ export default function Home() {
 
   useEffect(() => {
     setIsClient(true);
+    
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('clear') === 'true') {
+      localStorage.clear();
+      sessionStorage.clear();
+      window.location.href = '/';
+      return;
+    }
+    
     if (code && code.trim() !== '') {
       setShowPlaceholder(false);
     } else {
