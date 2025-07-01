@@ -272,9 +272,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - AWS for cloud infrastructure
 - All contributors and testers
 
+---
+
 <div align="center">
-  <p>If you found this project helpful, please consider giving it a ⭐️!</p>
-  <a href="https://www.buymeacoffee.com/yourusername">
-    <img src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=☕&slug=yourusername&button_colour=5F7FFF&font_colour=ffffff&font_family=Inter&outline_colour=000000&coffee_colour=FFDD00" />
-  </a>
+  <p>Built with ❤️ for demonstrating production-ready AI applications</p>
 </div>
